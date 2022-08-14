@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /**
+         * 
+         * 检测数据类型typeof
+         * 有两种类型无法检测，null,arr
+         * 
+         * 万能方法指向对象
+         * Object.prototype.toString()
+        */
+
+        let nul = null
+        console.log(Object.prototype.toString.call(nul));
+    </script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //伪数组排序的问题
+        let obj = {
+            0:12,
+            1:21,
+            2:10,
+            3:9,
+            length:5
+        }
+        console.log(obj);
+        //想法：伪数组没有排序的方法，数组有
+        Array.prototype.sort.call(obj,function(a,b){return a-b})
+        console.log(obj);
+        Array.prototype.sort.apply(obj,function(a,b){return a-b})
+        console.log(obj);
+
+        console.log('-----------------------------');
+        let arr = [1,2,3,4,5]
+        console.log(Math.max.apply(arr,arr));
+        
+        
+    </script>
+</body>
+</html>

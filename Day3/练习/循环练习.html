@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<script>
+    for(let i=100;i<=200;i++){
+        document.write(i+"  ")
+    }
+
+    for(let i = 1;i<=100;i++){
+        if(i%7==0) {document.write(i+'  ')}
+    }
+
+    let arr = [];
+    for(let i = 0;i<5;i++){
+        arr[i] = parseInt(prompt("输入的数据为："))
+    }
+
+    //arr数组存储输入的五个数据，使用冒泡排序进行对数组排序
+    for(let i = 0;i<arr.length-1;i++){
+        for(let j = i+1;j<arr.length;j++){
+            if(arr[i]>arr[j]){
+                let temp = arr[i]
+                arr[i] = arr[j]
+                arr[j] = temp
+            }
+        }
+    }
+
+    //alert最大值
+    alert("最大的数为:"+arr[arr.length-1])
+    
+
+</script>
+</body>
+</html>

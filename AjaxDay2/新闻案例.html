@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./assets/news.css">
+    <script src="./js/jquery-1.12.4.min.js"></script>
+    <script src="./lib/template-web.js"></script>
+</head>
+
+<body>
+    <div class="box"></div>
+</body>
+
+</html>
+<script type="text/html" id="tpl-info">
+    {{each}}
+    <div class="news-item">
+        <img class="thumb" src="http://www.liulongbin.top:3006{{$value.img}}" alt="{{$value.tags}}" />
+        <div class="right-box">
+          <h1 class="title">{{$value.title}}</h1>
+          <div class="tags">
+            {{each $value.tags}}
+            <span>{{$value}}</span>
+            {{/each}}
+          </div>
+          <div class="footer">
+            <div>
+              <span>{{$value.source}}</span>&nbsp;&nbsp;
+              <span>{{$value.time | getFormatTime}}</span>
+            </div>
+            <span>评论数：{{$value.cmtcount}}</span>
+          </div>
+        </div>
+      </div> 
+      {{/each}}
+</script>
+<script>
+    $(function () {
+        //要获取到信息，看看是什么样子的，然后对数据进回显
+        $.ajax({
+            method: "get",
+            url: "http://www.liulongbin.top:3006/api/news",
+            success: function (result) {
+                //状态码的判断就舍弃了
+                //标签需要转化成数组
+                $.each(result.data,function(index,value){
+                    result.data[index].tags = value.tags.split(',')
+                })
+                let htmlStr = template('tpl-info',result.data)
+                //写入到页面
+                $('.box').html(htmlStr)
+            }
+        })
+
+        //创建一个函数处理格式化的时间
+        template.defaults.imports.getFormatTime = function(time){
+            let date = new Date(time)
+            let month = date.getMonth()+1
+            let day = date.getDate()
+            let year = date.getFullYear()
+            let hour = date.getHours()
+            let minute = date.getMinutes()
+            let second = date.getSeconds()
+            return `${year}/${month}/${day} ${hour}:${minute}:${second}`
+        }
+    })
+</script>

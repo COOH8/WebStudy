@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button class="open">点击打开窗口</button>
+    <button class="close">点击关闭窗口</button>
+    <script>
+        /*
+            BOM：
+            window：js的顶级对象，是一个全局对象，包含了document，指代对象为top
+        */
+        let openBtn = document.querySelector(".open")
+        let closeBtn = document.querySelector(".close")
+
+        openBtn.onclick = function(){
+            window.open("http://www.baidu.com","_self")
+        }
+
+        closeBtn.onclick = function(){
+            window.close()
+        }
+    </script>
+</body>
+</html>

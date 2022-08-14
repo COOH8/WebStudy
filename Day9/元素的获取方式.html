@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <ul class="ul1">
+        <li>我是班长1</li>
+        <li class="bz">我是班长2</li>
+        <li>我是班长3</li>
+        <li>我是班长4</li>
+        <li>我是班长5</li>
+        <li>我是班长6</li>
+        <li>我是班长7</li>
+    </ul>
+
+    <ul class="ul2">
+        <li>我是坤坤1</li>
+        <li class="kk">我是坤坤2</li>
+        <li>我是坤坤3</li>
+        <li>我是坤坤4</li>
+    </ul>
+    <script>
+        //DOM操作：1.父子元素 2，兄弟元素 3.这些元素之间的增删改查
+        /*
+        1.父子操作（标签之间具有层级关系）
+        获取子元素： 元素.children
+        获取父元素： 元素.parentElement
+        
+        2.兄弟元素
+        前面的兄弟结点：元素.previousElementSibling
+        后面的兄弟结点：
+
+        3.DOM定位结点的位置后
+        增：1.创建标签creatElement("p") 2.标签赋值 3.appendChild()追加
+        指定位置插入：ul2.insertBefore(newLi,bz) 将newLi插入到bz的前面
+
+
+        */
+        let bz = document.querySelector(".bz")
+
+        let ul1 = document.querySelector(".ul1")
+        let ul2 = document.querySelector(".ul2")
+
+        //console.log(bz.childNodes)
+        //console.log(bz.children)
+        let bzPrevious =  bz.previousElementSibling
+        let bzNext = bz.nextElementSibling
+
+        console.log(bzPrevious.innerHTML)
+        console.log(bzNext.innerHTML)
+
+        ul1.appendChild(ul2)
+    </script>
+</body>
+</html>

@@ -1,0 +1,149 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>购物车结算页面</title>
+  <!-- bootstrap三个文件 -->
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+  <link type="text/css" rel="stylesheet" href="css/style.css" />
+  <!-- 模拟服务器：动态加载页面数据 （暂时不做研究） -->
+  <script type="text/javascript" src="js/script.js"></script>
+</head>
+
+<body>
+  <div class="shopping-car-container">
+    <div class="car-headers-menu">
+      <div class="row">
+        <div class="col-md-1 car-menu">
+          <label><span id="checkAll">全选</span></label>
+        </div>
+        <div class="col-md-3 car-menu">商品信息</div>
+        <div class="col-md-3 car-menu">商品参数</div>
+        <div class="col-md-1 car-menu">单价</div>
+        <div class="col-md-1 car-menu">数量</div>
+        <div class="col-md-1 car-menu">金额</div>
+        <div class="col-md-2 car-menu">操作</div>
+      </div>
+    </div>
+    <div class="goods-content">
+      <!--goods display-->
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-body bottom-menu-include">
+        <div class="col-md-1 check-all-bottom bottom-menu">
+          <label>
+            <input type="checkbox" id="checked-all-bottom" />
+            <span id="checkAllBottom">全选</span>
+          </label>
+        </div>
+        <div class="col-md-1 bottom-menu">
+          <span id="deleteMulty">
+            删除
+          </span>
+        </div>
+        <div class="col-md-6 bottom-menu"></div>
+        <div class="col-md-2 bottom-menu">
+          <span>已选商品 <span id="selectGoodsCount">0</span> 件</span>
+        </div>
+        <div class="col-md-1 bottom-menu">
+          <span>合计：<span id="selectGoodsMoney">0.00</span></span>
+        </div>
+        <div class="col-md-1 bottom-menu submitData submitDis">
+          结算
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /*
+    初版未抛弃.对象的概念，可以使用（父子兄）结点的方式去获取到结点
+      .对象方式的缺点：初次获取的对象在内存中会存储，如果删除对象，存储中的对象还是可以正常的访问到
+    */
+
+    //入口函数： DOM树 + 外部资源加载完毕
+    window.onload = function () {
+      /* 1.全选框 + 选择框 */
+      let checkAll = document.querySelector("#checked-all-bottom")
+      let checkList = document.querySelectorAll('.goods-list-item')
+
+      checkAll.onclick = function () {
+        for (let i = 0; i < checkList.length; i++) {
+          checkList[i].checked = this.checked
+        }
+        countAll()
+      }
+
+      for (let i = 0; i < checkList.length; i++) {
+        checkList[i].onclick = function () {
+          for (let j = 0; j < checkList.length; j++) {
+            if (!checkList[j].checked) {
+              checkAll.checked = false
+              break
+            }
+            checkAll.checked = true
+          }
+          countAll()
+        }
+      }
+
+      // 2.加减按钮 + 输入框
+      //加减法实现
+
+      let addBtnList = document.querySelectorAll(".car-add,.car-decrease")
+      for (let i = 0; i < addBtnList.length; i++) {
+        addBtnList[i].onclick = function () {
+          let panelBody = this.parentElement.parentElement.parentElement.parentElement
+          let countValue = panelBody.querySelector(".goods-count")
+          if (addBtnList[i].className.indexOf("car-add") != -1) {
+            countValue.value++
+          } else {
+            countValue.value > 0 ? countValue.value-- : countValue.value
+          }
+
+          panelBody.querySelector(".single-total").innerText =
+            panelBody.querySelector(".single-price").innerText * panelBody.querySelector(".goods-count").value
+
+          countAll()
+        }
+      }
+
+
+      /* 3.单个删除 + 全部删除 */
+      let deleteBtnList = document.querySelectorAll(".item-delete")
+      for (let i = 0; i < deleteBtnList.length; i++) {
+        deleteBtnList[i].onclick = function () {
+          this.parentElement.parentElement.parentElement.remove()
+          countAll()
+        }
+      }
+
+      document.querySelector("#deleteMulty").onclick = function () {
+        for (let i = 0; i < deleteBtnList.length; i++) {
+          deleteBtnList[i].parentElement.parentElement.parentElement.remove()
+        }
+        countAll()
+      }
+
+      /* 4.总数量 + 总价格 */
+      function countAll() {
+        let priceTotal = 0
+        let goodsCount = 0
+        let itemGoods = document.querySelectorAll(".goods-item")
+        for (let i = 0; i < itemGoods.length; i++) {
+          if (itemGoods[i].querySelector(".goods-list-item").checked) {
+            priceTotal += (+itemGoods[i].querySelector(".single-total").innerText)
+            goodsCount += (+itemGoods[i].querySelector(".goods-count").value)
+          }
+        }
+        document.querySelector("#selectGoodsMoney").innerText = priceTotal.toFixed(2)
+        document.querySelector("#selectGoodsCount").innerText = goodsCount
+
+      }
+    }
+  </script>
+</body>
+
+</html>

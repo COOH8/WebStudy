@@ -1,0 +1,177 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>购物车结算页面</title>
+  <!-- bootstrap三个文件 -->
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+  <link type="text/css" rel="stylesheet" href="css/style.css" />
+  <!-- 模拟服务器：动态加载页面数据 （暂时不做研究） -->
+  <script type="text/javascript" src="js/script.js"></script>
+</head>
+
+<body>
+  <div class="shopping-car-container">
+    <div class="car-headers-menu">
+      <div class="row">
+        <div class="col-md-1 car-menu">
+          <label><span id="checkAll">全选</span></label>
+        </div>
+        <div class="col-md-3 car-menu">商品信息</div>
+        <div class="col-md-3 car-menu">商品参数</div>
+        <div class="col-md-1 car-menu">单价</div>
+        <div class="col-md-1 car-menu">数量</div>
+        <div class="col-md-1 car-menu">金额</div>
+        <div class="col-md-2 car-menu">操作</div>
+      </div>
+    </div>
+    <div class="goods-content">
+      <!--goods display-->
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-body bottom-menu-include">
+        <div class="col-md-1 check-all-bottom bottom-menu">
+          <label>
+            <input type="checkbox" id="checked-all-bottom" />
+            <span id="checkAllBottom">全选</span>
+          </label>
+        </div>
+        <div class="col-md-1 bottom-menu">
+          <span id="deleteMulty">
+            删除
+          </span>
+        </div>
+        <div class="col-md-6 bottom-menu"></div>
+        <div class="col-md-2 bottom-menu">
+          <span>已选商品 <span id="selectGoodsCount">0</span> 件</span>
+        </div>
+        <div class="col-md-1 bottom-menu">
+          <span>合计：<span id="selectGoodsMoney">0.00</span></span>
+        </div>
+        <div class="col-md-1 bottom-menu submitData submitDis">
+          结算
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    //入口函数： DOM树 + 外部资源加载完毕
+    window.onload = function () {
+      /* 1.全选框 + 选择框 */
+      let checkAll = document.querySelector("#checked-all-bottom")
+      let checkList = document.querySelectorAll('.goods-list-item')
+
+      checkAll.onclick = function () {
+        for (let i = 0; i < checkList.length; i++) {
+          checkList[i].checked = this.checked
+        }
+        countAll()
+      }
+
+      for (let i = 0; i < checkList.length; i++) {
+        checkList[i].onclick = function () {
+          countAll()
+          for (let j = 0; j < checkList.length; j++) {
+            if (!checkList[j].checked) {
+              checkAll.checked = false
+              break
+            }
+            checkAll.checked = true
+          }
+        }
+      }
+
+      /* 2.加减按钮 + 输入框 */
+      let addBtnList = document.querySelectorAll(".btn.btn-default.car-add")
+      let decreaseList = document.querySelectorAll(".btn.btn-default.car-decrease")
+      let countTextList = document.querySelectorAll(".form-control.goods-count")
+      let sigleTotal = document.querySelectorAll(".single-total")
+      let singlePrice = document.querySelectorAll(".single-price")
+
+      countTotal()
+      //加法实现
+      for (let i = 0; i < addBtnList.length; i++) {
+        addBtnList[i].onclick = function () {
+          countTextList[i].value++
+          countTotal()
+          countAll()
+        }
+      }
+      //减法实现
+      for (let i = 0; i < decreaseList.length; i++) {
+        decreaseList[i].onclick = function () {
+          if (countTextList[i].value > 0) {
+            countTextList[i].value--
+            countTotal()
+          }
+          countAll()
+        }
+      }
+
+      //求累计的金额
+      function countTotal() {
+        //拿到value,拿到单价，拿到总价
+        for (let i = 0; i < countTextList.length; i++) {
+          sigleTotal[i].innerText = singlePrice[i].innerText * countTextList[i].value
+        }
+      }
+
+
+
+      /* 3.单个删除 + 全部删除 */
+      let itemDelete = document.querySelectorAll(".item-delete")
+      let goodsItem = document.querySelectorAll(".goods-item")
+      let goodsContent = document.querySelector(".goods-content")
+      let deleteMulty = document.querySelector("#deleteMulty")
+      for (let i = 0; i < itemDelete.length; i++) {
+        itemDelete[i].onclick = function () {
+          goodsContent.removeChild(goodsItem[i])
+          onloadFunction()
+          countAll()
+        }
+      }
+
+      let shopping = document.querySelector(".shopping-car-container")
+      deleteMulty.onclick = function () {
+        shopping.removeChild(goodsContent)
+        onloadFunction()
+        countAll()
+      }
+
+
+      /* 4.总数量 + 总价格 */
+      function countAll() {
+        let totalAll = 0
+        let totalGoods = 0
+        for (let i = 0; i < checkList.length; i++) {
+          if (checkList[i].checked) {
+            totalAll += (+sigleTotal[i].innerText)
+            totalGoods += (+countTextList[i].value)
+          }
+        }
+        document.querySelector("#selectGoodsCount").innerText = totalGoods
+        document.querySelector("#selectGoodsMoney").innerText = totalAll.toFixed(2)
+      }
+
+      function onloadFunction() {
+        checkAll = document.querySelector("#checked-all-bottom")
+        checkList = document.querySelectorAll('.goods-list-item')
+        countTextList = document.querySelectorAll(".form-control.goods-count")
+        sigleTotal = document.querySelectorAll(".single-total")
+        singlePrice = document.querySelectorAll(".single-price")
+        addBtnList = document.querySelectorAll(".btn.btn-default.car-add")
+        decreaseList = document.querySelectorAll(".btn.btn-default.car-decrease")
+        itemDelete = document.querySelectorAll(".item-delete")
+        goodsItem = document.querySelectorAll(".goods-item")
+        goodsContent = document.querySelector(".goods-content")
+        deleteMulty = document.querySelector("#deleteMulty")
+      }
+
+    }
+  </script>
+</body>
+
+</html>

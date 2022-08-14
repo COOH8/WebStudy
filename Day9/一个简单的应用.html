@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8" />
+    <title>关闭二维码</title>
+    <style>
+        .box {
+            border: 1px solid #d9d9d9;
+            margin: 100px auto;
+            position: relative;
+            width: 107px;
+        }
+
+        #x {
+            border: 1px solid #d9d9d9;
+            width: 14px;
+            height: 14px;
+            line-height: 14px;
+            color: #d6d6d6;
+            cursor: pointer;
+            position: absolute;
+            top: 0;
+            left: -15px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <img src="images/taobao.jpg" alt="" />
+        <span id="x">×</span>
+    </div>
+</body>
+<script>
+    let box = document.querySelector('.box')
+    let xId = document.querySelector('#x')
+    xId.onclick = function(){
+        xId.parentNode.style.display = 'none'
+        console.log(xId.parentNode)
+    }
+</script>
+</html>

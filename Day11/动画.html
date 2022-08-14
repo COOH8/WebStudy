@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box{
+            width: 200px;
+            height: 200px;
+            background-color: pink;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+<button class="btn" onclick="fn1()">点击移动400px</button>
+<button class="btn2">点击移动800px</button>
+<div class="box"></div>
+<script>
+    function fn1(){
+        autoMove(400)
+    }
+
+    document.querySelector('.btn2').onclick = function(){
+        autoMove(800)
+    }
+
+    function autoMove(target){
+        let box = document.querySelector('.box')
+        let timeMove = setInterval(function(){
+            let currentLeft = box.offsetLeft
+            
+            if(currentLeft<target){
+                currentLeft += 10 
+                box.style.left = currentLeft+'px'
+                if(currentLeft>=target){
+                    clearInterval(timeMove)
+                    box.style.left = target+'px'
+                }
+            }else{
+                currentLeft -= 10
+                box.style.left = currentLeft +'px'
+                if(currentLeft<=target){
+                    clearInterval(timeMove)
+                    box.style.left = target+'px'
+                }
+            }
+        },20)
+    }
+</script>
+</body>
+</html>

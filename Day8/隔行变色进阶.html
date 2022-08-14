@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <ul>
+        <li>我是班长1</li>
+        <li>我是班长2</li>
+        <li>我是班长3</li>
+        <li>我是班长4</li>
+        <li>我是班长5</li>
+        <li>我是班长6</li>
+        <li>我是班长7</li>
+        <li>我是班长8</li>
+        <li>我是班长9</li>
+        <li>我是班长10</li>
+    </ul>
+    <script>
+        let liArray = document.querySelectorAll('li')
+
+        //在开始之前先赋attrbuite属性
+        for(let i = 0;i<liArray.length;i+=2){
+            liArray[i].style.backgroundColor = 'yellow'
+            liArray[i].count = 0
+            liArray[i+1].style.backgroundColor = 'blue'
+            liArray[i+1].count = 1
+        }
+
+
+        for(let i = 0;i<liArray.length;i++){
+            liArray[i].onmouseover = function(){
+                liArray[i].style.backgroundColor = 'red'
+            }
+
+            liArray[i].onmouseout = function(){
+                if(liArray[i].count === 0){
+                    liArray[i].style.backgroundColor = 'yellow'
+                }else{
+                    liArray[i].style.backgroundColor = 'blue'
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

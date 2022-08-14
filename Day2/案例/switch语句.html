@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=>, initial-scale=1.0">
+    <title>switch语句</title>
+</head>
+<body>
+<script>
+    let num1 = parseInt(prompt("输入数字：")) 
+    let op = prompt("想要的运算(+,-,*,/)为：")
+    let num2 = parseInt(prompt("输入第二个数字："))
+
+
+    switch (op) {
+        case "+":
+            document.write("结果为："+(num1+num2))
+            break
+        case "-":
+            document.write("结果为："+(num1-num2))
+            break
+        case "*":
+            document.write("结果为："+(num1*num2))
+            break
+        case "/":
+            document.write("结果为："+(num1/num2))
+            break
+        default:
+            document.write("输入处理异常")
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box {
+            width: 240px;
+            border: 1px solid #000;
+            margin: 100px auto;
+            padding: 20px;
+        }
+
+        .con {
+            width: 100%;
+            height: 200px;
+            background-color: #cccccc;
+            border: 1px solid #000;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .current {
+            background-color: pink;
+            border: 2px black solid;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <button class="current">按钮1</button>
+        <button >按钮2</button>
+        <button >按钮3</button>
+        <button >按钮4</button>
+        <div class="con" style="display: block;">内容1</div>
+        <div class="con" style="display: none;">内容2</div>
+        <div class="con" style="display: none;">内容3</div>
+        <div class="con" style="display: none;">内容4</div>
+    </div>
+    <script>
+        let btnList = document.querySelectorAll('button')
+        let divList = document.querySelectorAll('.con')
+
+        for (let i = 0; i < btnList.length; i++) {
+            btnList[i].onclick = function () {
+                for(let j = 0;j<btnList.length;j++){
+                    if(!(i==j&&btnList[j].className==="current")){
+                        btnList[j].className = ''
+                        btnList[i].className = 'current'       
+                        divList[i].style.display = 'block'
+                        divList[j].style.display = 'none'
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container">
+    </div>
+</body>
+
+</html>
+<script src="./lib/jquery.js"></script>
+<script src="./lib/template-web.js"></script>
+<script type="text/html" id="art-temple">
+    <h1>标题:{{title}}</h1>
+        <ol>
+            <li>姓名:{{name}}</li>
+            <li>年龄:{{age}}</li>
+            <li>性别:{{gender}}</li>
+        </ol>
+</script>
+<script>
+    let userinfo = {
+            title:'你是我的小阿小苹果',
+            name:'筷子兄弟',
+            age: 38,
+            gender:'可爱的老男孩'
+        }
+        let strHtml = template("art-temple",userinfo)
+        console.log(strHtml);
+        $('.container').html(strHtml)
+        
+</script>

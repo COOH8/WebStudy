@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <style>
+    #father {
+      width: 200px;
+      height: 400px;
+      background-color: skyblue;
+      position: absolute;
+      top: 50px;
+      left: 50px;
+    }
+
+    #son {
+      width: 200px;
+      height: 100px;
+      background-color: hotpink;
+      cursor: move;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="father">
+    <div id="son"></div>
+  </div>
+  <script>
+    //拖拽子元素，父元素会跟着移动
+    //思路：给子元素定位使用pageX定位元素，父子同时修改
+
+    let son = document.querySelector('#son')
+    let father = document.querySelector('#father')
+    son.onmousedown = function (e) {
+      let x = e.pageX - father.offsetLeft
+      let y = e.pageY - father.offsetTop
+
+      window.onmousemove = function (ele) {
+        father.style.left = ele.pageX - x +"px"
+        father.style.top = ele.pageY - y +"px"
+      }
+
+      //触发鼠标的松开事件
+      son.onmouseup = function(){
+        window.onmousemove = null
+
+      }
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>验证长度是否为六位</title>
+</head>
+
+<body>
+    用户名:<input type="text" placeholder="输入用户名"><br />
+    密码: <input type="password" placeholder="输入密码"><br />
+    <button class="btn">登录</button>
+    <script>
+        let inputArr = document.querySelectorAll('input')
+        let btn = document.querySelector('.btn')
+
+        btn.onclick = function () {
+            if (inputArr[0].value.length > 6 && inputArr[1].value.length > 6) {
+                alert("成功")
+            } else {
+                alert("失败")
+            }
+        }
+    </script>
+</body>
+
+</html>

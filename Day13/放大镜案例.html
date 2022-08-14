@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8" />
+    <title></title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .box {
+            width: 350px;
+            height: 350px;
+            margin: 100px;
+            border: 1px solid #ccc;
+            position: relative;
+        }
+
+        .big {
+            width: 400px;
+            height: 400px;
+            position: absolute;
+            top: 0;
+            left: 360px;
+            border: 1px solid #ccc;
+            overflow: hidden;
+            display: none;
+        }
+
+        .mask {
+            width: 175px;
+            height: 175px;
+            background: rgba(255, 255, 0, 0.4);
+            position: absolute;
+            top: 0;
+            left: 0;
+            cursor: move;
+            display: none;
+        }
+
+        .small {
+            position: relative;
+        }
+
+        .box img {
+            vertical-align: top;
+        }
+
+        #bigBox>img {
+            /*是让里面的图片脱标，为的就是让里面的图片进行一个移动*/
+            position: absolute;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box" id="box">
+        <div class="small" id="smallBox">
+            <img src="images/001.jpg" width="350" alt="" />
+
+            <div class="mask" id="mask"></div>
+        </div>
+        <div class="big" id="bigBox">
+            <img id="bigImg" src="images/0001.jpg" width="800" alt="" />
+        </div>
+    </div>
+</body>
+<script>
+    /*
+    有三个元素，装图片的盒子，mask盒子，放大的盒子
+    事件：
+    1.当鼠标移入时：会显示mask盒子与放大的盒子，保证鼠标在盒子的中间，同时需要做边界检测
+    2.鼠标移出时，隐藏大盒子与mask盒子
+    3.鼠标移动时，对mask盒子进行操作
+    4.放大的倍数是放大的盒子/mask盒子（宽高）
+
+    总结:其实为了保证图片放大的一致性，mask盒子与BIG盒子的比例等于SMALL图片比BIG图片的比例
+    */
+    let box = document.querySelector('.box')
+    let small = document.querySelector('#smallBox')
+    let mask = document.querySelector('#mask')
+    let big = document.querySelector('#bigBox')
+    let bigImg = document.querySelector('#bigImg')
+
+    small.onmouseover = function () {
+        mask.style.display = "block"
+        big.style.display = "block"
+
+    }
+
+    small.onmouseout = function () {
+        mask.style.display = "none"
+        big.style.display = "none"
+    }
+
+    //对小盒子的移动事件进行监听
+    small.onmousemove = function(e){
+        //1.鼠标在mask盒子的中心
+        //1.1鼠标相对于小盒子的位置
+        let x = e.pageX - box.offsetLeft
+        let y = e.pageY - box.offsetTop
+
+        x -= mask.offsetWidth/2
+        y -= mask.offsetHeight/2
+
+        //2边界检测
+        x = x<0?0:x
+        x = x>box.offsetWidth-mask.offsetWidth?box.offsetWidth-mask.offsetWidth:x
+        y = y<0?0:y
+        y = y>box.offsetHeight-mask.offsetHeight?box.offsetHeight-mask.offsetHeight:y
+        //console.log(x,y)
+        mask.style.left = x + 'px'
+        mask.style.top = y + 'px'
+        /*
+        此时mask盒子是相对的位置，父元素定位为relative,子元素的盒子为absolute,所以盒子style.left的位置是相对于box的
+        */
+       //3.对大盒子的图片位置修改
+       bigImg.style.left =  -bigBox.offsetWidth/mask.offsetWidth * x + 'px'
+       bigImg.style.top =  -bigBox.offsetHeight/mask.offsetHeight * y + 'px'
+    }
+</script>
+
+</html>

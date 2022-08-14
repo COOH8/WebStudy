@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<script>
+    let time = parseInt(prompt("输入转化时间（秒）："))
+    let arr = countTime(time)
+    document.write(`${time}秒,转换的时间是：${arr[2]}时${arr[1]}分${arr[0]}秒`)
+
+    function countTime(time) {
+        let second = time%60
+        let minute = (time-second)/60%60
+        let hour = ((time-second)/60-minute)/60%24
+        return [second,minute,hour]
+    }
+</script>
+</body>
+</html>

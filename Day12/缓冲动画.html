@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box1,.box2{
+            background-color: pink;
+            width: 150px;
+            height: 150px;
+            margin-bottom: 20px;
+            position :absolute;
+        }
+    </style>
+</head>
+<body>
+<button class="btn1">匀速移动400px</button>
+<button class="btn2">缓动移动400px</button>
+<div class="box1"></div>
+<div class="box2"></div>
+<script>
+    let box1 = document.querySelector('.box1')
+    let box2 = document.querySelector('.box2')
+    document.querySelector(".btn2").onclick = function(){
+        let timeID = setInterval(function(){
+            let currentPos = box2.offsetLeft
+            let step = (400 - currentPos)/10
+            currentPos+=step
+            currentPos = Math.ceil(currentPos)
+            box2.style.left = currentPos + 'px'
+            if(currentPos>=400){
+                box2.style.left = '400px'
+                clearInterval(timeID)
+            }
+        },20)
+    }
+
+
+
+    document.querySelector(".btn1").onclick = function(){
+        let timeID = setInterval(function(){
+            currentPos = box1.offsetLeft
+            currentPos += 10
+            box1.style.left = currentPos + 'px' 
+            if(currentPos>=400){
+                box1.style.left = '400px'
+                clearInterval(timeID)
+            }
+        },20)
+    }
+</script>
+</body>
+</html>

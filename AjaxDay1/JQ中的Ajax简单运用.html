@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/jquery-1.12.4.js"></script>
+</head>
+
+<body>
+</body>
+<button id="#btn1">獲取笑話</button>
+<button id="btn2">获取多条笑话</button>
+
+</html>
+<script>
+    $(function () {
+        //使用Ajax请求获取笑话，之后回显到body
+        $('#btn1').on('click', function () {
+            $.get({
+                url: "https://autumnfish.cn/api/joke",
+                success: function (result, status) {
+                    //已知获取数据，对数据进行操作
+                    // console.log(result);
+                    $('body').append(`<h3>${result}</h3>`)
+                }
+            })
+        })
+    })
+// 获取多条数据（带请求参数）
+    $(function(){
+        $('#btn2').on('click',function(){
+            $.get({
+                url:"https://autumnfish.cn/api/joke/list",
+                data:{
+                    num:4
+                },
+                success:function(result){
+                    //console.log(result); //可以获取到，之后对这些数据进行处理
+                    result.data.forEach(element => {
+                        $('body').append(`<h3>${element}</h3>`)
+                    });
+
+
+                }
+            })
+        })
+    })
+    //测试
+    //1.测试一下：
+    // console.log("".trim()) //这是在清除空格字符
+</script>

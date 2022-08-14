@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="box" style="background-color: pink;width: 250px;height: 250px;"></div>
+    <script>
+        let JsObj = {
+            age:32,
+            setColor:function(label,InputColor){
+                label.style.backgroundColor = InputColor
+            }
+        }
+        
+    </script>
+    <script>
+        let box = document.querySelector('.box')
+        JsObj.setColor(box,"red")
+        console.log("JsObj的值为:",JsObj.age)
+
+        /**
+         * 体会：
+         * 1.如何构建多个对象，而不是一个地址（一般可以使用New的方式，但是function会产生资源浪费）
+         * 2.对象内的值如何设置为只可读（原型对象）
+         */
+
+         function Person(name,age){
+            this.name = name
+            this.age = age
+         }
+
+         Person.prototype.game = "篮球"
+         Person.prototype.active = function(){
+            console.log("打篮球")
+         }
+
+         let p1 = new Person("张三",21)
+         
+    </script>
+</body>
+</html>

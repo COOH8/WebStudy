@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>综合案例</title>
+    <style>
+        table{
+            margin: 30px auto;
+            /* 合并边框 */
+            border-collapse: collapse;
+            text-align: center;
+        }
+
+        table,th,td{
+            border: 1px solid #000
+        }
+    </style>
+    </style>
+</head>
+<div style="text-align: center;">
+    <h2>订单付款确认页面</h2>
+    <table>
+        <tr>
+            <td>商品名称</td>
+            <td>商品价格</td>
+            <td>商品数量</td>
+            <td>总价</td>
+            <td>收货地址</td>
+        </tr>
+        <tr>
+            <td>小米手机青春版plus</td>
+            <td>1999</td>
+            <td id="count"></td>
+            <td id="all_pirce"></td>
+            <td id="address"></td>
+        </tr>
+    </table>
+</div>
+<script>
+    let count = prompt("输入购买数量：")
+    let address = prompt("输入购买的地址：")
+    let all_pirce = 1999*count
+
+    document.getElementById("count").innerText = count
+    document.getElementById("all_pirce").innerText = all_pirce
+    document.getElementById("address").innerText = address
+</script>
+</body>
+</html>

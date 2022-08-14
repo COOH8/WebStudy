@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        span {
+            background-color: black;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <span class="hour">00</span>:
+    <span class="minute">00</span>:
+    <span class="second">10</span>
+
+    <script>
+        //监听定时器
+
+
+        let timeAll = setInterval(function () {
+            let hourSpan = +document.querySelector('.hour').innerText
+            let minuteSpan = +document.querySelector('.minute').innerText
+            let secondSpan = +document.querySelector('.second').innerText
+            secondSpan--
+            if (secondSpan < 0) {
+                secondSpan = 59
+                minuteSpan--
+            } else if (minuteSpan < 0) {
+                minuteSpan = 59
+                hourSpan--
+            }
+
+            secondSpan = secondSpan < 10 ? '0' + secondSpan : secondSpan
+            minuteSpan = minuteSpan < 10 ? '0' + minuteSpan : minuteSpan
+            hourSpan = hourSpan < 10 ? '0' + hourSpan : hourSpan
+
+            document.querySelector('.hour').innerText = hourSpan
+            document.querySelector('.minute').innerText = minuteSpan
+            document.querySelector('.second').innerText = secondSpan
+
+            if (secondSpan == 0 && minuteSpan == 0 && hourSpan == 0) {
+                clearInterval(timeAll)
+            }
+
+        }, 1000)
+    </script>
+</body>
+
+</html>

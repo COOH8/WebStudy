@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /**
+         * 函数的上下文模式（目的是修改this）
+         * 1.call模式
+         * 函数名.call(修改this,形参...)
+         * 适用于单参数的情况
+         * 
+         * 使用点：1.构造函数借调功能
+         * 
+         * 2.apply
+         * 函数名.apply(修改this,数组或伪数组)
+         * 适用于：多参数的情况
+         * 
+         * 3.bind
+         * 用于事件与定时器(默认是window)
+         * 一般使用bind形参的时候不传形参（传入形参会固定死）
+         * 
+         * 注意点：
+         * 传入的参数需要是对象，如果不是对象会转化为内置对象
+         * 如果不传对象，或其他null之类的，就是window
+         * 
+        */
+
+        function fn(a, b) {
+            console.log(this);
+            console.log(a + b);
+        }
+        fn.call({ name: "张三" }, 10, 20)
+        console.log('---------call--------');
+
+        
+    </script>
+</body>
+
+</html>

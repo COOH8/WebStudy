@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .main,
+        table {
+            width: 800px;
+            margin: 0 auto;
+        }
+
+        .main {
+            height: 40px;
+            line-height: 40px;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        .optd {
+            width: 200px;
+        }
+
+        .addTable {
+            width: 780px;
+            padding: 10px;
+            border: 1px solid green;
+            /* 固定位置 */
+            position: fixed;
+            top: 200px;
+            left: 50%;
+            margin-left: -400px;
+            /* 标准流 */
+            /* margin: 0 auto; */
+            background-color: #fff;
+            display: none;
+        }
+
+        .addTable table {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <input type="button" value="新增一行" id="add" />
+    </div>
+    <table id="table"></table>
+    <!--用于新增表格获取数据的模块-->
+    <div class="addTable" id="addRow">
+        <table>
+            <tr>
+                <th>学号</th>
+                <th>姓名</th>
+                <th>性别</th>
+                <th>年龄</th>
+            </tr>
+            <tr>
+                <td><input type="text" id="number" /></td>
+                <td><input type="text" id="name" /></td>
+                <td>
+                    <select id="gender">
+                        <option>男</option>
+                        <option>女</option>
+                    </select>
+                </td>
+                <td><input type="text" id="age" /></td>
+            </tr>
+        </table>
+
+        <div>
+            <input type="button" value="确定" id="sure" />
+            <input type="button" value="取消" id="cancle" />
+        </div>
+    </div>
+    <script>
+        let head = ['学号', '姓名', '性别', '年龄', '操作']
+        let data = [
+            { number: '001', name: '李狗蛋', gender: '男', age: 16 },
+            { number: '002', name: '王大柱', gender: '女', age: 17 },
+            { number: '003', name: '李葫芦', gender: '男', age: 15 },
+            { number: '004', name: '小明', gender: '男', age: 18 },
+            { number: '005', name: '小红', gender: '女', age: 16 }
+        ]
+        let table = document.querySelector('#table')
+        //1.先将head的信息传递上去
+        let headStr = "<tr>"
+        for (let i = 0; i < head.length; i++) {
+            headStr += `<td>${head[i]}</td>`
+        }
+        headStr += "</tr>"
+        table.innerHTML = headStr
+        //2将数据显示上去
+        let str = "<tbody>"
+        for (let i = 0; i < data.length; i++) {
+            str += "<tr>"
+            str += `<td>${data[i].number}</td>`
+            str += `<td>${data[i].name}</td>`
+            str += `<td>${data[i].gender}</td>`
+            str += `<td>${data[i].age}</td>`
+            str += `<td>
+                <button  class="up">上移</button>
+                <button>下移</button>
+                <button>删除</button>
+                </td>`
+            str += "</tr>"
+        }
+        str += "</tbody>"
+        table.innerHTML += str
+        //点击add按钮添加点击事件
+        let addRow = document.querySelector('#addRow')
+        let add = document.querySelector('#add')
+        add.onclick = function () {
+            addRow.style.display = "block"
+        }
+
+        //点击确认事件
+        document.querySelector('#sure').onclick = function(){
+            let tempStr = "<tr>"
+            tempStr+=`<td>${document.querySelector('#number').value}</td>`
+            tempStr+=`<td>${document.querySelector('#name').value}</td>`
+            tempStr+=`<td>${document.querySelector('#gender').value}</td>`
+            tempStr+=`<td>${document.querySelector('#age').value}</td>`
+            tempStr+=`<td>
+                <button  class="up">上移</button>
+                <button>下移</button>
+                <button>删除</button>
+                </td>`
+            tempStr+="</tr>"
+            table.innerHTML += tempStr
+            addRow.style.display = "none"
+        }
+        
+        //点击取消事件
+        let cancle = document.querySelector('#cancle')
+        cancle.onclick = function(){
+            addRow.style.display = "none"
+        }
+        //点击上移事件
+            //存在一个问题就是如何获取到想要修改的元素标签的位置
+            //传统的方法一般是.children一层点下去
+            //现在就可以使用事件委托的方式对事件进行跟踪
+            table.onclick = function(e){
+                let tbody = table.children[1]
+                //console.log(e.target.parentNode.parentNode)
+                //上移事件
+                if(e.target.className==="up"){
+                    let tr = e.target.parentNode.parentNode
+                    if(tr==tbody.firstElementChild){
+                        alert("已经是第一个元素无法移动！")
+                    }else{
+                        tbody.insertBefore(tr,tr.previousElementSibling)
+                    }
+                }
+                //下移事件
+                else if(e.target.innerText==="下移"){
+                    let tr = e.target.parentNode.parentNode
+                    if(tr==tbody.lastElementChild){
+                        alert("已经是最后一个元素无法移动！")
+                    }else{
+                        tbody.insertBefore(tr,tr.nextElementSibling.nextElementSibling)
+                    } 
+                }
+                else if(e.target.innerText==="删除"){
+                    let tr = e.target.parentNode.parentNode
+                    tbody.removeChild(tr)
+                }
+            }
+    </script>
+</body>
+
+</html>

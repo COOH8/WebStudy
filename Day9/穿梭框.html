@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        select{
+            width: 120px;
+            height: 160px;
+            margin: 30px 20px 0px;
+        }
+    </style>
+</head>
+<body>
+    <select id = "left" multiple>
+        <option value="">web工程师</option>
+        <option value="">android工程师</option>
+        <option value="">ios工程师</option>
+        <option value="">PHP工程师</option>
+        <option value="">nodejs工程师</option>
+        <option value="">java工程师</option>
+        <option value="">python工程师</option>
+    </select>
+
+    <button class="btn1">&gt;&gt;</button>
+    <button class="btn2">&lt;&lt;</button>
+    <button class="btn3">&gt;</button>
+    <button class="btn4">&lt;</button>
+
+    <select id = "right" multiple></select>
+
+    <script>
+        let left = document.querySelector("#left")
+        let right = document.querySelector("#right")
+
+        let btn1 = document.querySelector(".btn1")
+        let btn2 = document.querySelector(".btn2")
+        let btn3 = document.querySelector(".btn3")
+        let btn4 = document.querySelector(".btn4")
+
+
+        btn1.onclick = function(){
+            for(let i = 0;i<left.children.length;){
+                right.appendChild(left.children[i])
+            }
+        }
+
+        btn2.onclick = function(){
+            for(let i = 0;i<right.children.length;){
+                left.appendChild(right.children[i])
+            }
+        }
+
+        btn3.onclick = function(){
+            for(let i = 0 ;i<left.children.length;i++){
+                if(left.children[i].selected){
+                    right.appendChild(left.children[i])
+                    i--
+                }
+            }
+
+        }
+        btn4.onclick = function(){
+            for(let i = 0 ;i<right.children.length;i++){
+                if(right.children[i].selected){
+                    left.appendChild(right.children[i])
+                    i--
+                }
+            }
+        }
+    </script>
+</body>
+</html>

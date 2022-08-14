@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /**
+         * 谁调用this,就指向谁
+         * this的指向与函数的调用有关，函数存在三种调用方式
+         * this也相对的存在三种指向
+         * 1.全局函数
+         * 
+         * 2.对象的方法--》指向对象
+         * 
+         * 3.构造函数--》指向空的实例对象Object
+         */
+    function fn(){
+        console.log(this)
+    }
+
+        fn()//window.fn()
+
+        let obj={
+            eat:fn
+        }
+        obj.eat()
+
+        new fn()
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/jquery-1.12.4.min.js"></script>
+    <link rel="stylesheet" href="./lib/bootstrap.css">
+    <style>
+        .w {
+            width: 80%;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+
+<body>
+    <div class="w">
+        <!-- bs3-panel:danger -->
+        <div class="panel panel-danger">
+            <div class="panel-heading">
+                <h3 class="panel-title">添加图书</h3>
+            </div>
+            <div class="panel-body form-inline">
+                <!-- bs3input-group:addon -->
+                <div class="input-group">
+                    <div class="input-group-addon">书名</div>
+                    <input type="text" class="form-control" id="bookname" placeholder="请输入书名" />
+                </div>
+                <div class="input-group">
+                    <div class="input-group-addon">作者</div>
+                    <input type="text" class="form-control" id="author" placeholder="请输入作者" />
+                </div>
+                <div class="input-group">
+                    <div class="input-group-addon">出版社</div>
+                    <input type="text" class="form-control" id="publisher" placeholder="请输入出版社" />
+                </div>
+                <button id="btnAdd" class="btn btn-danger">添加</button>
+            </div>
+        </div>
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>书名</th>
+                    <th>作者</th>
+                    <th>出版社</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody id="tb">
+                <!-- <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td><a href="javascript:void(0);">删除</a></td>
+                </tr> -->
+                
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+<script>
+    $(function(){
+        //1.获取参数,看看能否获取成功
+        
+
+    })
+</script>

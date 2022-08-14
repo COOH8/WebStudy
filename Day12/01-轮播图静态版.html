@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title></title>
+  <script src="./animation.js"></script>
+  <style type="text/css">
+    * {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+      border: 0;
+    }
+
+    .all {
+      width: 500px;
+      height: 200px;
+      padding: 7px;
+      border: 1px solid #ccc;
+      margin: 100px auto;
+      position: relative;
+    }
+
+    .screen {
+      width: 500px;
+      height: 200px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .screen li {
+      width: 500px;
+      height: 200px;
+      overflow: hidden;
+      float: left;
+    }
+
+    .screen ul {
+      position: absolute;
+      left: 0;
+      top: 0px;
+      width: 3000px;
+    }
+
+    .all ol {
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+      line-height: 20px;
+      text-align: center;
+    }
+
+    .all ol li {
+      float: left;
+      width: 20px;
+      height: 20px;
+      background: #fff;
+      border: 1px solid #ccc;
+      margin-left: 10px;
+      cursor: pointer;
+    }
+
+    .all ol li.current {
+      background: yellow;
+    }
+
+    #arr {
+      display: none;
+    }
+
+    #arr span {
+      width: 40px;
+      height: 40px;
+      position: absolute;
+      left: 5px;
+      top: 50%;
+      margin-top: -20px;
+      background: #000;
+      cursor: pointer;
+      line-height: 40px;
+      text-align: center;
+      font-weight: bold;
+      font-family: '黑体';
+      font-size: 30px;
+      color: #fff;
+      opacity: 0.3;
+      border: 1px solid #fff;
+    }
+
+    #arr #right {
+      right: 5px;
+      left: auto;
+    }
+  </style>
+
+</head>
+
+<body>
+  <div class="all" id="box">
+    <div class="screen">
+      <ul>
+        <li><img src="images/1.jpg" width="500" height="200" /></li>
+        <li><img src="images/2.jpg" width="500" height="200" /></li>
+        <li><img src="images/3.jpg" width="500" height="200" /></li>
+        <li><img src="images/4.jpg" width="500" height="200" /></li>
+        <li><img src="images/5.jpg" width="500" height="200" /></li>
+        <li><img src="images/1.jpg" width="500" height="200" /></li>
+      </ul>
+      <ol>
+        <li class="current">1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+      </ol>
+    </div>
+    <div id="arr">
+      <span id="left">&lt;</span>
+      <span id="right">&gt;</span>
+    </div>
+  </div>
+
+  <script>
+    /* 思路分析(找交互) 
+  
+      1.鼠标移入移出box : 显示/隐藏 箭头盒子arr
+      2.鼠标点击上一页下一页 : ul滚动到对应位置的图片， 页码排他高亮
+      3.图片无限滚动
+      4.点击页码列表 ： ul轮播图滚动到对应位置， 页码排他高亮
+
+    */
+    //1.获取元素
+    let box = document.querySelector('#box')
+    let arrBox = document.querySelector('#arr')
+    let leftSpan = document.querySelector('#left')
+    let rightSpan = document.querySelector('#right')
+    let screen = document.querySelector('.screen')
+    let ul = screen.children[0]
+    let ol = screen.children[1]
+    let index = 0 //用于定义图片的下标，表示当前图片
+
+    //创建定时器，跳转到下一页，对下一页的代码进行复用，封装成方法
+
+    let timeID = setInterval(function () {
+      nextPage()
+    }, 2000)
+
+    //2.注册事件
+    //2.1 鼠标移入box
+    box.onmouseover = function () {
+      arrBox.style.display = 'block'
+      //鼠标移入改为手动控制
+      clearInterval(timeID)
+    }
+
+    //2.2鼠标移出box
+    box.onmouseout = function () {
+      arrBox.style.display = 'none'
+      //移出时重新定义回定时器
+      timeID = setInterval(function () {
+        nextPage()
+      }, 2000)
+    }
+    //2.3 下一页
+    rightSpan.onclick = function () {
+      nextPage()
+    }
+    //2.4 上一页
+    leftSpan.onclick = function () {
+      if (index == 0) {
+        ul.style.left = -500 * (ul.children.length - 1) + 'px'
+        console.log(500 * ul.children.length)
+        index = 5
+      }
+      index--
+      animationMove(ul, -screen.offsetWidth * index)
+      transfromPic(index)
+    }
+
+    //2.5 页码点击
+    for (let i = 0; i < ol.children.length; i++) {
+      ol.children[i].onclick = function () {
+        index = this.innerText - 1
+        animationMove(ul, -screen.offsetWidth * index)
+        transfromPic(index)
+      }
+    }
+    /**
+    * @description: 根据索引改变图像的位置，和图片的下标高亮
+    * @param {number} 全局索引
+    * @return: void
+    */
+    function transfromPic(index) {
+      let currentNumber = ol.querySelector('.current')
+      if (index + 1 != (+currentNumber.innerText)) {
+        currentNumber.className = ''
+        ol.children[index].className = 'current'
+      }
+    }
+
+    function nextPage() {
+      if (index === ul.children.length - 1) {
+        ul.style.left = '0px'
+        index = 0
+      }
+      index++
+      animationMove(ul, -screen.offsetWidth * index)
+      if (index === ul.children.length - 1) {
+        transfromPic(0)
+      } else {
+
+        transfromPic(index)
+      }
+    }
+  </script>
+</body>
+
+</html>

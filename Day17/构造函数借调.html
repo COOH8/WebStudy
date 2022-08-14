@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //使用构造函数进行借调（调用相同的属性内容）
+        function Person(name,age){
+            this.name = name
+            this.age = age
+        }
+        function Student(name,age,score){
+            Person.call(this,name,age)
+            this.score = score
+        }
+
+        let s  = new Student("张三",25,56)
+        console.log(s);
+    </script>
+</body>
+</html>

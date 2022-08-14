@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <span class="time">0</span><br>
+    <button class="bt1">开启定时器</button>
+    <button class="bt2">关闭定时器</button>
+    <script>
+        let bt1 = document.querySelector('.bt1')
+        let bt2 = document.querySelector('.bt2')
+        let timeSpan = document.querySelector('.time')
+        let InterID = null
+
+        bt1.onclick = function(){
+            InterID =  setInterval(function(){
+                timeSpan.innerText++
+            },1000)
+        }
+
+        bt2.onclick = function(){
+            clearInterval(InterID)
+        }
+    </script>
+</body>
+</html>
